@@ -1,24 +1,31 @@
 class Calculator {
-  constructor(previousOperandButtonTextElement, currentOperandButtonTextElement) {
+  constructor(previousOperandButtonTextElement, currentOperandButtonTextElement) 
+  {
     this.previousOperandButtonTextElement = previousOperandButtonTextElement;
     this.currentOperandButtonTextElement = currentOperandButtonTextElement;
     this.clearBoard();
   }
 
-  clearBoardBoard() {
+  clearBoardBoard() 
+  {
     this.currentOperandButton = '';
     this.previousOperandButton = '';
     this.operations = undefined;
   }
-  deleteAction() {
+
+  deleteAction() 
+  {
     this.currentOperandButton = this.currentOperandButton.toString().slice(0, -1);
   }
-  appendNumber(number) {
+
+  appendNumber(number) 
+  {
     if (number === '.' && this.currentOperandButton.includes('.')) return;
     this.currentOperandButton = this.currentOperandButton.toString() + number.toString();
   }
 
-  chooseOperations(operations) {
+  chooseOperations(operations) 
+  {
     if (this.currentOperandButton === '') return;
     if (this.previousOperandButton !== '') {
       this.computeLogic();
@@ -28,7 +35,8 @@ class Calculator {
     this.currentOperandButton = '';
   }
 
-  computeLogic() {
+  computeLogic() 
+  {
     let computation;
     const prev = parseFloat(this.previousOperandButton);
     const current = parseFloat(this.currentOperandButton);
@@ -52,9 +60,10 @@ class Calculator {
     this.currentOperandButton = computation;
     this.operations = undefined;
     this.previousOperandButton = '';
-}
+  }
 
-  displayNumber(number) {
+  displayNumber(number) 
+  {
     const stringNumber = number.toString();
     const integerDigits = parseFloat(stringNumber.split('.')[0]);
     const decimalDigits = stringNumber.split('.')[1];
@@ -99,11 +108,13 @@ const currentOperandButtonTextElement = document.querySelector(
   '[data-current-operand]',
 );
 
+// Create a new instance of the Calculator class
 const calculator = new Calculator(
   previousOperandButtonTextElement,
   currentOperandButtonTextElement,
 );
 
+// Add event listeners to the number buttons
 numberButtons.forEach((button) => {
   button.addEventListener('click', () => {
     calculator.appendNumber(button.innerText);
@@ -111,6 +122,7 @@ numberButtons.forEach((button) => {
   });
 });
 
+// Add event listeners to the operation buttons
 operationsButtons.forEach((button) => {
   button.addEventListener('click', () => {
     calculator.chooseOperations(button.innerText);
@@ -118,16 +130,19 @@ operationsButtons.forEach((button) => {
   });
 });
 
+// Add event listener to the equals button
 equalsButton.addEventListener('click', (button) => {
   calculator.computeLogic();
   calculator.updateDisplay();
 });
 
+// Add event listener to the all clear button
 allClearButton.addEventListener('click', (button) => {
   calculator.clearBoard();
   calculator.updateDisplay();
 });
 
+// Add event listener to the delete button
 deleteButton.addEventListener('click', (button) => {
   calculator.deleteAction();
   calculator.updateDisplay();
